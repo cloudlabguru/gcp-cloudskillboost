@@ -4,6 +4,7 @@
 Create BigQuery tables following this step [here](https://console.cloud.google.com/functions/add)
 
 ### Task 2. Analyze soccer data
+Replace **$EVENT** (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Run this script in Cloud Shell
 ```
 bq query --use_legacy_sql=false \
@@ -28,6 +29,7 @@ ORDER BY PKSuccessRate DESC, numAttempt DESC
 ```
 
 ### Task 3. Gain insight by analyzing soccer data
+Replace **$EVENT, $X1, $X2, $Y1, $Y2** (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Run this script in Cloud Shell
 ```
 bq query --use_legacy_sql=false \
@@ -41,10 +43,10 @@ WITH Shots AS (
   using "average" field dimensions of 105x68 before combining in 2D dist calc */
   SQRT(
   POW(
-    (100 - positions[ORDINAL(1)].x) * $VALUE_X1/$VALUE_Y1,
+    (100 - positions[ORDINAL(1)].x) * $X1/$Y1,
     2) +
   POW(
-    (60 - positions[ORDINAL(1)].y) * $VALUE_X2/$VALUE_Y2,
+    (60 - positions[ORDINAL(1)].y) * $X2/$Y2,
     2)
    ) AS shotDistance
   FROM
@@ -67,6 +69,7 @@ ORDER BY ShotDistRound0
 ```
 
 ### Task 4. Create a regression model using soccer data
+Replace **$EVENT, $MODEL, $FUNC1, $FUNC2** (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Run this script in Cloud Shell
 ```
 bq query --use_legacy_sql=false \
@@ -80,9 +83,9 @@ SELECT
 Events.subEventName AS shotType,
   /* 101 is known Tag for 'goals' from goals table */
   (101 IN UNNEST(Events.tags.id)) AS isGoal,
-  \`$FUNC_1\`(Events.positions[ORDINAL(1)].x,
+  \`$FUNC1\`(Events.positions[ORDINAL(1)].x,
   Events.positions[ORDINAL(1)].y) AS shotDistance,
-  \`$FUNC_2\`(Events.positions[ORDINAL(1)].x,
+  \`$FUNC2\`(Events.positions[ORDINAL(1)].x,
   Events.positions[ORDINAL(1)].y) AS shotAngle
 FROM \`soccer.$EVENT\` Events
 LEFT JOIN \`soccer.matches\` Matches
@@ -97,13 +100,14 @@ WHERE
   eventName = 'Shot' OR
   (eventName = 'Free Kick' AND subEventName IN ('Free kick shot', 'Penalty'))
   ) AND
-  \`$FUNC_2\`(Events.positions[ORDINAL(1)].x,
+  \`$FUNC2\`(Events.positions[ORDINAL(1)].x,
   Events.positions[ORDINAL(1)].y) IS NOT NULL
 ;
 "
 ```
 
 ### Task 5. Make predictions from new data with the BigQuery model
+Replace **$EVENT, $MODEL, $FUNC1, $FUNC2** (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Run this script in Cloud Shell
 ```
 bq query --use_legacy_sql=false \
@@ -135,9 +139,9 @@ FROM
        /* 101 is known Tag for 'goals' from goals table */
        (101 IN UNNEST(Events.tags.id)) AS isGoal,
      
-       \`soccer.$FUNC_1\`(Events.positions[ORDINAL(1)].x,
+       \`soccer.$FUNC1\`(Events.positions[ORDINAL(1)].x,
            Events.positions[ORDINAL(1)].y) AS shotDistance,
-       \`soccer.$FUNC_2\`(Events.positions[ORDINAL(1)].x,
+       \`soccer.$FUNC2\`(Events.positions[ORDINAL(1)].x,
            Events.positions[ORDINAL(1)].y) AS shotAngle
      FROM
        \`soccer.$EVENT\` Events
