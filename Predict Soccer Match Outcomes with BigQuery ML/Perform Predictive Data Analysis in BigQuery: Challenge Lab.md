@@ -1,19 +1,173 @@
-## Predict Soccer Match Outcomes with BigQuery ML
+## Perform Predictive Data Analysis in BigQuery: Challenge Lab [SOLUTION]
 
 ### Task 1. Data ingestion
-* Go to Cloud Function from [here](https://console.cloud.google.com/functions/add)
+Create BigQuery tables following this step [here](https://console.cloud.google.com/functions/add)
 
 ### Task 2. Analyze soccer data
+Run this script in Cloud Shell
+```
+bq query --use_legacy_sql=false \
+"
+SELECT
+  playerId,
+  (Players.firstName || ' ' || Players.lastName) AS playerName,
+  COUNT(id) AS numAttempt,
+  SUM(IF(101 IN UNNEST(tags.id), 1, 0)) AS numGoal,
+  SAFE_DIVIDE(
+    SUM(IF(101 IN UNNEST(tags.id), 1, 0)),
+    COUNT(id)
+  ) AS PKSuccessRate
+FROM \`soccer.$EVENT\` Events
+LEFT JOIN \`soccer.players\` Players
+ON Events.playerId = Players.wyId
+WHERE eventName = 'Free Kick' AND subEventName = 'Penalty'
+GROUP BY playerId, playerName
+HAVING numAttempt >= 5
+ORDER BY PKSuccessRate DESC, numAttempt DESC
+"
+```
 
 ### Task 3. Gain insight by analyzing soccer data
-```sql
-select * from table
-curl -LO raw.githubusercontent.com/QUICK-GCP-LAB/2-Minutes-Labs-Solutions/main/Get%20Started%20with%20PubSub%20Challenge%20Lab/form_2.sh
+Run this script in Cloud Shell
+```
+bq query --use_legacy_sql=false \
+"
+WITH Shots AS (
+  SELECT
+  *,
+  /* Tag 101 represents a goal using the table */
+  (101 IN UNNEST(tags.id)) AS isGoal,
+  /* Translate 0-100 (x,y) coordinate-based distances to absolute positions
+  using "average" field dimensions of 105x68 before combining in 2D dist calc */
+  SQRT(
+  POW(
+    (100 - positions[ORDINAL(1)].x) * $VALUE_X1/$VALUE_Y1,
+    2) +
+  POW(
+    (60 - positions[ORDINAL(1)].y) * $VALUE_X2/$VALUE_Y2,
+    2)
+   ) AS shotDistance
+  FROM
+  \`soccer.$EVENT\`
+  WHERE
+  /* Includes both "open play" & free kick shots (including penalties) */
+  eventName = 'Shot' OR
+  (eventName = 'Free Kick' AND subEventName IN ('Free kick shot', 'Penalty'))
+)
+SELECT
+  ROUND(shotDistance, 0) AS ShotDistRound0,
+  COUNT(*) AS numShots,
+  SUM(IF(isGoal, 1, 0)) AS numGoals,
+  AVG(IF(isGoal, 1, 0)) AS goalPct
+FROM Shots
+WHERE shotDistance <= 50
+GROUP BY ShotDistRound0
+ORDER BY ShotDistRound0
+"
 ```
 
 ### Task 4. Create a regression model using soccer data
+Run this script in Cloud Shell
 ```
-sudo chmod +x form_2.sh
+bq query --use_legacy_sql=false \
+"
+CREATE MODEL \`$MODEL\`
+OPTIONS(
+model_type = 'LOGISTIC_REG',
+input_label_cols = ['isGoal']
+) AS
+SELECT
+Events.subEventName AS shotType,
+  /* 101 is known Tag for 'goals' from goals table */
+  (101 IN UNNEST(Events.tags.id)) AS isGoal,
+  \`$FUNC_1\`(Events.positions[ORDINAL(1)].x,
+  Events.positions[ORDINAL(1)].y) AS shotDistance,
+  \`$FUNC_2\`(Events.positions[ORDINAL(1)].x,
+  Events.positions[ORDINAL(1)].y) AS shotAngle
+FROM \`soccer.$EVENT\` Events
+LEFT JOIN \`soccer.matches\` Matches
+ON Events.matchId = Matches.wyId
+LEFT JOIN \`soccer.competitions\` Competitions
+ON Matches.competitionId = Competitions.wyId
+WHERE
+  /* Filter out World Cup matches for model fitting purposes */
+  Competitions.name != 'World Cup' AND
+  /* Includes both "open play" & free kick shots (including penalties) */
+  (
+  eventName = 'Shot' OR
+  (eventName = 'Free Kick' AND subEventName IN ('Free kick shot', 'Penalty'))
+  ) AND
+  \`$FUNC_2\`(Events.positions[ORDINAL(1)].x,
+  Events.positions[ORDINAL(1)].y) IS NOT NULL
+;
+"
+```
 
-./form_2.sh
+### Task 5. Make predictions from new data with the BigQuery model
+Run this script in Cloud Shell
 ```
+bq query --use_legacy_sql=false \
+"
+SELECT
+  predicted_isGoal_probs[ORDINAL(1)].prob AS predictedGoalProb,
+  * EXCEPT (predicted_isGoal, predicted_isGoal_probs),
+FROM
+  ML.PREDICT(
+    MODEL \`$MODEL\`, 
+    (
+     SELECT
+       Events.playerId,
+       (Players.firstName || ' ' || Players.lastName) AS playerName,
+       Teams.name AS teamName,
+       CAST(Matches.dateutc AS DATE) AS matchDate,
+       Matches.label AS match,
+     /* Convert match period and event seconds to minute of match */
+       CAST((CASE
+         WHEN Events.matchPeriod = '1H' THEN 0
+         WHEN Events.matchPeriod = '2H' THEN 45
+         WHEN Events.matchPeriod = 'E1' THEN 90
+         WHEN Events.matchPeriod = 'E2' THEN 105
+         ELSE 120
+         END) +
+         CEILING(Events.eventSec / 60) AS INT64)
+         AS matchMinute,
+       Events.subEventName AS shotType,
+       /* 101 is known Tag for 'goals' from goals table */
+       (101 IN UNNEST(Events.tags.id)) AS isGoal,
+     
+       \`soccer.$FUNC_1\`(Events.positions[ORDINAL(1)].x,
+           Events.positions[ORDINAL(1)].y) AS shotDistance,
+       \`soccer.$FUNC_2\`(Events.positions[ORDINAL(1)].x,
+           Events.positions[ORDINAL(1)].y) AS shotAngle
+     FROM
+       \`soccer.$EVENT\` Events
+     LEFT JOIN
+       \`soccer.matches\` Matches ON
+           Events.matchId = Matches.wyId
+     LEFT JOIN
+       \`soccer.competitions\` Competitions ON
+           Matches.competitionId = Competitions.wyId
+     LEFT JOIN
+       \`soccer.players\` Players ON
+           Events.playerId = Players.wyId
+     LEFT JOIN
+       \`soccer.teams\` Teams ON
+           Events.teamId = Teams.wyId
+     WHERE
+       /* Look only at World Cup matches to apply model */
+       Competitions.name = 'World Cup' AND
+       /* Includes both "open play" & free kick shots (but not penalties) */
+       (
+         eventName = 'Shot' OR
+         (eventName = 'Free Kick' AND subEventName IN ('Free kick shot'))
+       ) AND
+       /* Filter only to goals scored */
+       (101 IN UNNEST(Events.tags.id))
+    )
+  )
+ORDER BY
+predictedgoalProb
+"
+```
+
+## Congratulations! 
