@@ -2,8 +2,7 @@
 
 ### Task 1. Data ingestion
 * Open BigQuery
-* Create 2 new tables on the soccer dataset from the instruction
-* Watch [here](https://console.cloud.google.com/functions/add) to guide you
+* On "soccer" dataset, create 2 new tables from the instruction lab, watch [here](https://console.cloud.google.com/functions/add) to guide you
 
 ### Task 2. Analyze soccer data
 Replace ```$EVENT_TABLE``` (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
@@ -67,6 +66,8 @@ ORDER BY ShotDistRound0
 ```
 
 ### Task 4. Create a regression model using soccer data
+Run the 2 functions in BigQuery from the instruction first
+
 Replace ```$EVENT_TABLE, $MODEL, $FUNC1, $FUNC2``` (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Run this script in BigQuery Editor
 ```sql
