@@ -133,9 +133,9 @@ FROM
        /* 101 is known Tag for 'goals' from goals table */
        (101 IN UNNEST(Events.tags.id)) AS isGoal,
      
-       `soccer.$FUNC1`(Events.positions[ORDINAL(1)].x,
+       `$FUNC1`(Events.positions[ORDINAL(1)].x,
            Events.positions[ORDINAL(1)].y) AS shotDistance,
-       `soccer.$FUNC2`(Events.positions[ORDINAL(1)].x,
+       `$FUNC2`(Events.positions[ORDINAL(1)].x,
            Events.positions[ORDINAL(1)].y) AS shotAngle
      FROM `soccer.$EVENT_TABLE` Events
      LEFT JOIN `soccer.matches` Matches ON Events.matchId = Matches.wyId
