@@ -21,7 +21,7 @@ export VISERVING_CPU_DOCKER_WITH_MODEL=${mobile_inspection}
 export HTTP_PORT=8602
 export LOCAL_METRIC_PORT=8603
 docker pull ${VISERVING_CPU_DOCKER_WITH_MODEL}
-docker run -v /secrets:/secrets --rm -d --name "$CONTAINER_NAME" \
+docker run -v /secrets:/secrets --rm -d --name "${CONTAINER_NAME}" \
 --network="host" \
 -p ${HTTP_PORT}:8602 \
 -p ${LOCAL_METRIC_PORT}:8603 \
