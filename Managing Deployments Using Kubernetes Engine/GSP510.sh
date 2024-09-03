@@ -222,3 +222,5 @@ kubectl expose deployment helloweb -n $NAMESPACE --name=$SERVICE_NAME --type=Loa
 cd ..
 
 kubectl -n $NAMESPACE apply -f pod-monitoring.yaml
+
+echo "${YELLOW}${BOLD}DONE COMPLETED${RESET}"
