@@ -1,3 +1,7 @@
+YELLOW=`tput setaf 3`
+BOLD=`tput bold`
+RESET=`tput sgr0`
+
 export PROJECT_ID=$(gcloud config get-value project)
 
 gcloud config set compute/zone $ZONE
