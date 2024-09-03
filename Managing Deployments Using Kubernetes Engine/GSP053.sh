@@ -66,4 +66,4 @@ kubectl create -f deployments/hello-canary.yaml
 
 kubectl get deployments
 
-echo "${YELLOW}${BOLD}DONE, CONGRATULATIONS!${RESET}"
+echo "${YELLOW}${BOLD}DONE COMPLETED${RESET}"
