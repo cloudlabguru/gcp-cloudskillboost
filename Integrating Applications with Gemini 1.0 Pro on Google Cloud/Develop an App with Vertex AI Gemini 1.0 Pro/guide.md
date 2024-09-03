@@ -1,5 +1,13 @@
 ## Develop an App with Vertex AI Gemini 1.0 Pro [SOLUTION]
 
+Run this script in CloudShell
+```
+PROJECT_ID=$(gcloud config get-value project)
+mkdir ~/gemini-app
+cd ~/gemini-app
+python3 -m venv gemini-streamlit
+source gemini-streamlit/bin/activate
+```
 ### Task 1-4
 Run this script in CloudShell
 ```
