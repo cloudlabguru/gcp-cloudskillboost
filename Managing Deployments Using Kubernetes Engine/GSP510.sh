@@ -124,7 +124,7 @@ kubectl -n $NAMESPACE apply -f manifests/helloweb-deployment.yaml
 
 
 
-cat > techcps.json <<EOF_CP
+cat > pod.json <<EOF_CP
 {
   "displayName": "Pod Error Alert",
   "userLabels": {},
@@ -158,7 +158,7 @@ cat > techcps.json <<EOF_CP
 }
 EOF_CP
 
-gcloud alpha monitoring policies create --policy-from-file="techcps.json"
+gcloud alpha monitoring policies create --policy-from-file="pod.json"
 
 
 
@@ -222,5 +222,46 @@ kubectl expose deployment helloweb -n $NAMESPACE --name=$SERVICE_NAME --type=Loa
 cd ..
 
 kubectl -n $NAMESPACE apply -f pod-monitoring.yaml
+
+gcloud logging metrics create pod-image-errors \
+  --description="cloudlab" \
+  --log-filter="resource.type=\"k8s_pod\"	
+severity=WARNING"
+
+cat > alert.json <<EOF_END
+{
+  "displayName": "Pod Error Alert",
+  "userLabels": {},
+  "conditions": [
+    {
+      "displayName": "Kubernetes Pod - logging/user/pod-image-errors",
+      "conditionThreshold": {
+        "filter": "resource.type = \"k8s_pod\" AND metric.type = \"logging.googleapis.com/user/pod-image-errors\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "600s",
+            "crossSeriesReducer": "REDUCE_SUM",
+            "perSeriesAligner": "ALIGN_COUNT"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "duration": "0s",
+        "trigger": {
+          "count": 1
+        },
+        "thresholdValue": 0
+      }
+    }
+  ],
+  "alertStrategy": {
+    "autoClose": "604800s"
+  },
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": []
+}
+EOF_END
+
+gcloud alpha monitoring policies create --policy-from-file="alert.json"
 
 echo "${YELLOW}${BOLD}DONE COMPLETED${RESET}"
