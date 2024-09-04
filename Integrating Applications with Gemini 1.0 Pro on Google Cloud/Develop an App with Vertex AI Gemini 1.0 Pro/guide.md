@@ -7,6 +7,9 @@ REGION=
 Run this script in CloudShell
 ```
 PROJECT_ID=$(gcloud config get-value project)
+SERVICE_NAME='gemini-app-playground' 
+AR_REPO='gemini-app-repo'
+
 mkdir ~/gemini-app
 cd ~/gemini-app
 python3 -m venv gemini-streamlit
