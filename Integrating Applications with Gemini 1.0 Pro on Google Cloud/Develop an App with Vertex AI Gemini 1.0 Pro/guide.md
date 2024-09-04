@@ -1,5 +1,9 @@
 ## Develop an App with Vertex AI Gemini 1.0 Pro [SOLUTION]
 
+Fill this with the given value and run in CloudShell
+```
+REGION=
+```
 Run this script in CloudShell
 ```
 PROJECT_ID=$(gcloud config get-value project)
