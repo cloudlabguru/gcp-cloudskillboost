@@ -86,6 +86,15 @@ new_model_keras = tf.keras.models.load_model('my_model.keras')
 # Summary of loaded keras model
 new_model_keras.summary()
 
+# Save the entire model to a HDF5 file.
+model.save('my_model.h5')
+
+# Recreate the exact same model, including its weights and the optimizer
+new_model_h5 = tf.keras.models.load_model('my_model.h5')
+
+# Summary of loaded h5 model
+new_model_h5.summary()
+
 EOF
 
 python model.py
@@ -134,7 +143,7 @@ EOF
 
 python callback_model.py
 
-cat > updated_model.py <<'EOF'
+cat > updated_model_1.py <<'EOF'
 # Import and configure logging
 import logging
 import google.cloud.logging as cloud_logging
@@ -158,6 +167,7 @@ BATCH_SIZE = 32
 # Normalizing and batch processing of data
 ds_train = ds_train.map(lambda x, y: (tf.cast(x, tf.float32)/255.0, y)).batch(BATCH_SIZE)
 ds_test = ds_test.map(lambda x, y: (tf.cast(x, tf.float32)/255.0, y)).batch(BATCH_SIZE)
+# Define the model
 # Define the model
 model = tf.keras.models.Sequential([tf.keras.layers.Flatten(),
                                     tf.keras.layers.Dense(128, activation=tf.nn.relu),
@@ -173,9 +183,9 @@ model.summary(print_fn=up_logger.info)
 
 EOF
 
-python updated_model.py
+python updated_model_1.py
 
-cat > updated_model.py <<'EOF'
+cat > updated_model_2.py <<'EOF'
 # Import and configure logging
 import logging
 import google.cloud.logging as cloud_logging
@@ -200,6 +210,8 @@ BATCH_SIZE = 32
 ds_train = ds_train.map(lambda x, y: (tf.cast(x, tf.float32)/255.0, y)).batch(BATCH_SIZE)
 ds_test = ds_test.map(lambda x, y: (tf.cast(x, tf.float32)/255.0, y)).batch(BATCH_SIZE)
 # Define the model
+# Define the model
+# Define the model
 model = tf.keras.models.Sequential([tf.keras.layers.Flatten(),
                                     tf.keras.layers.Dense(64, activation=tf.nn.relu),
                                     tf.keras.layers.Dense(64, activation=tf.nn.relu),
@@ -215,9 +227,9 @@ model.summary(print_fn=up_logger.info)
 
 EOF
 
-python updated_model.py
+python updated_model_2.py
 
-cat > updated_model.py <<'EOF'
+cat > updated_model_3.py <<'EOF'
 # Import and configure logging
 import logging
 import google.cloud.logging as cloud_logging
@@ -261,4 +273,4 @@ up_logger.info("test images max " + str(np.max(t_image_batch[0])))
 
 EOF
 
-python updated_model.py
+python updated_model_3.py
