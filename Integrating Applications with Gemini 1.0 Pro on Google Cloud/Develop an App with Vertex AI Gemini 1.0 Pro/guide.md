@@ -7,8 +7,6 @@ REGION=
 Run this script in CloudShell
 ```
 PROJECT_ID=$(gcloud config get-value project)
-SERVICE_NAME='gemini-app-playground' 
-AR_REPO='gemini-app-repo'
 
 mkdir ~/gemini-app
 cd ~/gemini-app
@@ -29,6 +27,9 @@ sudo chmod +x task.sh
 ### Task 14
 Run this script in CloudShell
 ```
+SERVICE_NAME='gemini-app-playground' 
+AR_REPO='gemini-app-repo'
+
 gcloud artifacts repositories create "$AR_REPO" --location="$REGION" --repository-format=Docker
 
 gcloud auth configure-docker "$REGION-docker.pkg.dev"
