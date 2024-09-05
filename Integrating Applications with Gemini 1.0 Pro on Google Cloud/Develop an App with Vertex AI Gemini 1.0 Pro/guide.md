@@ -15,7 +15,7 @@ cd ~/gemini-app
 python3 -m venv gemini-streamlit
 source gemini-streamlit/bin/activate
 ```
-### Task 1-14
+### Task 1-13
 Run this script in CloudShell
 ```
 curl -LO raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/main/Integrating%20Applications%20with%20Gemini%201.0%20Pro%20on%20Google%20Cloud/Develop%20an%20App%20with%20Vertex%20AI%20Gemini%201.0%20Pro/task.sh
@@ -26,6 +26,7 @@ sudo chmod +x task.sh
 * Test the app, click generate button in every tab
 * Ctrl+C in CloudShell
 
+### Task 14
 Run this script in CloudShell
 ```
 gcloud artifacts repositories create "$AR_REPO" --location="$REGION" --repository-format=Docker
