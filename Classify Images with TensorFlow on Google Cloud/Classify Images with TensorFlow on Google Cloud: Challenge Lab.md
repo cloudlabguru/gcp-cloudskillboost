@@ -28,4 +28,6 @@ In JupyterLab terminal, run this script
 git clone https://github.com/GoogleCloudPlatform/training-data-analyst
 ```
 
+[Download this notebook](https://github.com/cloudlabguru/gcp-cloudskillboost/blob/main/Classify%20Images%20with%20TensorFlow%20on%20Google%20Cloud/cnn_challenge_lab.ipynb) and replace it
+
 ## Congratulations !! 
