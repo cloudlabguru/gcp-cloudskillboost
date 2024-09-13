@@ -5,7 +5,7 @@
 * Go to menu Develop, qwiklabs-ecommerce
   
 ### Task 1. Create dimensions and measures
-Create a new .view file named ```order_items_challenge``` and paste this following into it
+Create a new .view file named ```order_items_challenge``` and paste this following to replace all
 ```
 view: order_items_challenge {
   sql_table_name: `cloud-training-demos.looker_ecomm.order_items`  ;;
@@ -44,7 +44,7 @@ view: order_items_challenge {
 ```
 
 ### Task 2. Create a persistent derived table
-Create a new .view file named ```user_details``` and paste this following into it
+Create a new .view file named ```user_details``` and paste this following to replace all
 ```
 view: user_details {
   derived_table: {
