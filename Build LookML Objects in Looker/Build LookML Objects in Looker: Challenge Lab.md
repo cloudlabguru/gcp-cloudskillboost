@@ -1,5 +1,9 @@
 ## Build LookML Objects in Looker: Challenge Lab [SOLUTION]
 
+* Open Looker
+* Enable Development mode
+* Go to menu Develop, qwiklabs-ecommerce
+  
 ### Task 1. Create dimensions and measures
 Create a new .view file named ```order_items_challenge``` and paste this following into it
 ```
