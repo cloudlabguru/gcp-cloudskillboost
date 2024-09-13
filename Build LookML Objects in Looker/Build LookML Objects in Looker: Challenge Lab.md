@@ -175,7 +175,7 @@ explore: events {
 }
 ```
 
-<strong>Stop here now, and get the green ticks first for task 1-3</strong>
+<strong>Stop here now, and get the green ticks first for task 1,2,3 Filter#2, 3 Filter#4</strong>
 
 ### Task 4. Apply a datagroup to an Explore
 Replace ```NUM``` with value in ```hours``` (only numbers) you can use this [website](https://www.browserling.com/tools/text-replace) <br />
