@@ -175,6 +175,8 @@ explore: events {
 }
 ```
 
+Stop here now, and get the green ticks first for task 1-3
+
 ### Task 4. Apply a datagroup to an Explore
 Replace ```NUM``` with value in ```hours``` (only numbers) you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Then again copy paste to replace the ```training_ecommerce``` model file
