@@ -6,6 +6,16 @@
 
 ### Task 2. Analyze soccer data
 Replace ```$EVENT_TABLE``` (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
+```
+$EVENT_TABLE=
+$X1=
+$Y1=
+$X2=
+$Y2=
+$FUNC1=
+$FUNC2=
+$MODEL=
+```
 Run this script in BigQuery Editor
 ```sql
 SELECT
@@ -29,7 +39,7 @@ ORDER BY PKSuccessRate DESC, numPKAtt DESC
 ```
 
 ### Task 3. Gain insight by analyzing soccer data
-Replace ```$EVENT_TABLE, $X1, $X2, $Y1, $Y2``` (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
+Replace ```$EVENT_TABLE, $X1, $Y1, $X2, $Y2``` (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Run this script in BigQuery Editor
 ```sql
 WITH Shots AS (
