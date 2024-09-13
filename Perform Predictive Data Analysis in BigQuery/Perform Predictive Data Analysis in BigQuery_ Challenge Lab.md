@@ -5,7 +5,7 @@
 * On "soccer" dataset, create 2 new tables from the instruction lab
 
 ### Task 2-5
-Copy to notepad and fill this value given by the instruction lab
+Copy to [notepad] (https://www.rapidtables.com/tools/notepad.html) and fill this value given by the instruction lab
 ```
 $EVENT_TABLE=
 $X1=
