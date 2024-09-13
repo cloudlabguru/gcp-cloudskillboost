@@ -4,7 +4,7 @@
 * Open BigQuery
 * On "soccer" dataset, create 2 new tables from the instruction lab
 
-### Task 2. Analyze soccer data
+### Task 2-5
 Copy to notepad and fill this value given by the instruction lab
 ```
 $EVENT_TABLE=
@@ -16,9 +16,10 @@ $FUNC1=
 $FUNC2=
 $MODEL=
 ```
-Replace ```$EVENT_TABLE``` (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
+Replace all the above variable (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Run this script in BigQuery Editor
 ```sql
+-- TASK 2
 SELECT
   playerId,
   (Players.firstName || ' ' || Players.lastName) AS playerName,
@@ -37,12 +38,9 @@ WHERE
 GROUP BY playerId, playerName
 HAVING numPkAtt >= 5
 ORDER BY PKSuccessRate DESC, numPKAtt DESC
-```
+;
 
-### Task 3. Gain insight by analyzing soccer data
-Replace ```$EVENT_TABLE, $X1, $Y1, $X2, $Y2``` (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
-Run this script in BigQuery Editor
-```sql
+-- TASK 3
 WITH Shots AS (
   SELECT
   *,
@@ -74,14 +72,9 @@ FROM Shots
 WHERE shotDistance <= 50
 GROUP BY ShotDistRound0
 ORDER BY ShotDistRound0
-```
+;
 
-### Task 4. Create a regression model using soccer data
-Run the 2 functions in BigQuery from the instruction first
-
-Replace ```$EVENT_TABLE, $MODEL, $FUNC1, $FUNC2``` (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
-Run this script in BigQuery Editor
-```sql
+-- TASK 4
 CREATE FUNCTION `$FUNC1`(x INT64, y INT64)
 RETURNS FLOAT64
 AS (
@@ -146,12 +139,8 @@ WHERE
   `$FUNC2`(Events.positions[ORDINAL(1)].x,
   Events.positions[ORDINAL(1)].y) IS NOT NULL
 ;
-```
 
-### Task 5. Make predictions from new data with the BigQuery model
-Replace ```$EVENT_TABLE, $MODEL, $FUNC1, $FUNC2``` (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
-Run this script in BigQuery Editor
-```sql
+-- TASK 5
 SELECT
   predicted_isGoal_probs[ORDINAL(1)].prob AS predictedGoalProb,
   * EXCEPT (predicted_isGoal, predicted_isGoal_probs),
@@ -202,6 +191,7 @@ FROM
   )
 ORDER BY
 predictedgoalProb
+;
 ```
 
 ## Congratulations !! 
