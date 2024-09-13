@@ -2,7 +2,7 @@
 
 ### Task 1. Data ingestion
 * Open BigQuery
-* On "soccer" dataset, create 2 new tables from the instruction lab, watch [here](https://console.cloud.google.com/functions/add) to guide you
+* On "soccer" dataset, create 2 new tables from the instruction lab
 
 ### Task 2. Analyze soccer data
 Replace ```$EVENT_TABLE``` (including $) with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
