@@ -84,8 +84,8 @@ view: user_details {
 ```
 
 ### Task 3. Use Explore filters
-Replace ```VALUE1``` with value in ```Filter #1 price``` (include $ sign) <br />
-and ```VALUE2``` with value in ```Filter #3 price``` (include $ sign) you can use this [website](https://www.browserling.com/tools/text-replace) <br />
+Replace ```VALUE1``` with value in ```Filter #1 price``` (only numbers) <br />
+and ```VALUE2``` with value in ```Filter #3 price``` (only numbers) you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Then copy paste to replace the ```training_ecommerce``` model file
 ```
 connection: "bigquery_public_data_looker"
@@ -176,7 +176,7 @@ explore: events {
 ```
 
 ### Task 4. Apply a datagroup to an Explore
-Replace ```NUM``` with value in ```hours``` (only the numbers) you can use this [website](https://www.browserling.com/tools/text-replace) <br />
+Replace ```NUM``` with value in ```hours``` (only numbers) you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Then again copy paste to replace the ```training_ecommerce``` model file
 ```
 connection: "bigquery_public_data_looker"
