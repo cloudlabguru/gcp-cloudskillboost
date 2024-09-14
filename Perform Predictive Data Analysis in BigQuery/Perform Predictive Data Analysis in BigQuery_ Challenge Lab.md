@@ -4,6 +4,8 @@
 * Open BigQuery
 * On "soccer" dataset, create 2 new tables from the instruction lab
 
+<strong> First, run the two define functions from instruction lab </strong>
+
 ### Task 2-5
 Copy to [notepad](https://www.rapidtables.com/tools/notepad.html) and fill this value given by the instruction lab
 ```
@@ -75,41 +77,6 @@ ORDER BY ShotDistRound0
 ;
 
 -- TASK 4
-CREATE FUNCTION `$FUNC1`(x INT64, y INT64)
-RETURNS FLOAT64
-AS (
- /* Translate 0-100 (x,y) coordinate-based distances to absolute positions
- using "average" field dimensions of X-axis lengthxY-axis length before combining in 2D dist calc */
- SQRT(
-   POW(($X1 - x) * $X2/100, 2) +
-   POW(($Y1 - y) * $Y2/100, 2)
-   )
- );
-CREATE FUNCTION `$FUNC2`(x INT64, y INT64)
-RETURNS FLOAT64
-AS (
- SAFE.ACOS(
-   /* Have to translate 0-100 (x,y) coordinates to absolute positions using
-   "average" field dimensions of X-axis lengthxY-axis length before using in various distance calcs */
-   SAFE_DIVIDE(
-     ( /* Squared distance between shot and 1 post, in meters */
-       (POW($X2 - (x * $X2/100), 2) + POW($Y2/2 + (7.32/2) - (y * $Y2/100), 2)) +
-       /* Squared distance between shot and other post, in meters */
-       (POW($X2 - (x * $X2/100), 2) + POW($Y2/2 - (7.32/2) - (y * $Y2/100), 2)) -
-       /* Squared length of goal opening, in meters */
-       POW(7.32, 2)
-     ),
-     (2 *
-       /* Distance between shot and 1 post, in meters */
-       SQRT(POW($X2 - (x * $X2/100), 2) + POW($Y2/2 + 7.32/2 - (y * $Y2/100), 2)) *
-       /* Distance between shot and other post, in meters */
-       SQRT(POW($X2 - (x * $X2/100), 2) + POW($Y2/2 - 7.32/2 - (y * $Y2/100), 2))
-     )
-    )
-  /* Translate radians to degrees */
-  ) * 180 / ACOS(-1)
- )
-;
 CREATE MODEL `$MODEL`
 OPTIONS(
 model_type = 'LOGISTIC_REG',
