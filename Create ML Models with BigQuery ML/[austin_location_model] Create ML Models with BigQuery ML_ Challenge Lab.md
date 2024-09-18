@@ -8,6 +8,7 @@ If you have to make ```customer_classification_model``` please move to [this gui
 * Create dataset ```bq_dataset```
 
 ### Task 2. Create a forecasting BigQuery machine learning model
+Replace variable ```EVALUATION_YEAR``` with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Run this script in BigQuery Editor
 ```sql
 CREATE OR REPLACE MODEL austin.austin_location_model
@@ -26,12 +27,13 @@ JOIN `bigquery-public-data.austin_bikeshare.bikeshare_stations` AS stations
 ON
   trips.start_station_name = stations.name
 WHERE
-  EXTRACT(YEAR FROM start_time) = $EVALUATION_YEAR
+  EXTRACT(YEAR FROM start_time) = EVALUATION_YEAR
   AND duration_minutes > 0;
 ;
 ```
 
 ### Task 3. Evaluate the machine learning models
+Replace variable ```EVALUATION_YEAR``` with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Run this script in BigQuery Editor
 ```sql
 SELECT
@@ -49,12 +51,13 @@ FROM
   JOIN `bigquery-public-data.austin_bikeshare.bikeshare_stations` AS stations
   ON
     trips.start_station_name = stations.name
-  WHERE EXTRACT(YEAR FROM start_time) = $EVALUATION_YEAR)
+  WHERE EXTRACT(YEAR FROM start_time) = EVALUATION_YEAR)
 )
 ;
 ```
 
 ### Task 4. Use the subscriber type machine learning model to predict average trip durations
+Replace variable ```EVALUATION_YEAR``` with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
 Run this script in BigQuery Editor
 ```sql
 SELECT AVG(predicted_duration_minutes) AS average_predicted_trip_length
@@ -66,7 +69,7 @@ SELECT
     duration_minutes
 FROM `bigquery-public-data.austin_bikeshare.bikeshare_trips`
 WHERE
-  EXTRACT(YEAR FROM start_time) = $EVALUATION_YEAR
+  EXTRACT(YEAR FROM start_time) = EVALUATION_YEAR
   AND subscriber_type = 'Single Trip'
   AND start_station_name = '21st & Speedway @PCL'));
 ```
