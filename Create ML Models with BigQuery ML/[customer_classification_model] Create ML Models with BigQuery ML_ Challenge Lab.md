@@ -1,4 +1,6 @@
 ## Create ML Models with BigQuery ML: Challenge Lab [SOLUTION]
+This guide is for ```customer_classification_model```, please read your instruction lab task 2 carefully <br/>
+If you have to make ```predicts_visitor_model``` please move to [this guide lab](https://github.com/cloudlabguru/gcp-cloudskillboost/blob/main/Create%20ML%20Models%20with%20BigQuery%20ML/%5Bpredicts_visitor_model%5D%20Create%20ML%20Models%20with%20BigQuery%20ML%3A%20Challenge%20Lab.md)
 
 ### Task 1. Create a new dataset
 * Open BigQuery
