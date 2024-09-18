@@ -21,10 +21,8 @@ SELECT
   EXTRACT(DAYOFWEEK FROM start_time) AS day_of_week,
   duration_minutes,
   address AS location
-FROM
-  \`bigquery-public-data.austin_bikeshare.bikeshare_trips\` AS trips
-JOIN
-  \`bigquery-public-data.austin_bikeshare.bikeshare_stations\` AS stations
+FROM `bigquery-public-data.austin_bikeshare.bikeshare_trips` AS trips
+JOIN `bigquery-public-data.austin_bikeshare.bikeshare_stations` AS stations
 ON
   trips.start_station_name = stations.name
 WHERE
@@ -47,10 +45,8 @@ FROM
     EXTRACT(DAYOFWEEK FROM start_time) AS day_of_week,
     duration_minutes,
     address AS location
-  FROM
-    \`bigquery-public-data.austin_bikeshare.bikeshare_trips\` AS trips
-  JOIN
-    \`bigquery-public-data.austin_bikeshare.bikeshare_stations\` AS stations
+  FROM `bigquery-public-data.austin_bikeshare.bikeshare_trips` AS trips
+  JOIN `bigquery-public-data.austin_bikeshare.bikeshare_stations` AS stations
   ON
     trips.start_station_name = stations.name
   WHERE EXTRACT(YEAR FROM start_time) = $EVALUATION_YEAR)
@@ -68,12 +64,11 @@ SELECT
     EXTRACT(HOUR FROM start_time) AS start_hour,
     subscriber_type,
     duration_minutes
-FROM
-  \`bigquery-public-data.austin_bikeshare.bikeshare_trips\`
+FROM `bigquery-public-data.austin_bikeshare.bikeshare_trips`
 WHERE
   EXTRACT(YEAR FROM start_time) = $EVALUATION_YEAR
   AND subscriber_type = 'Single Trip'
-  AND start_station_name = '21st & Speedway @PCL'))";
+  AND start_station_name = '21st & Speedway @PCL'));
 ```
 
 ## Congratulations !! 
