@@ -74,7 +74,7 @@ FROM
 Run this script in BigQuery Editor
 ```sql
 #standardSQL
-CREATE OR REPLACE MODEL `ecommerce.customer_classification_model`
+CREATE OR REPLACE MODEL `ecommerce.improved_customer_classification_model`
 OPTIONS(model_type='logistic_reg') AS
 SELECT
   IF(totals.transactions IS NULL, 0, 1) AS label,
@@ -87,7 +87,7 @@ WHERE _TABLE_SUFFIX BETWEEN '20160801' AND '20170631'
 LIMIT 100000;
 
 SELECT *
-FROM ml.EVALUATE(MODEL `ecommerce.customer_classification_model`, (
+FROM ml.EVALUATE(MODEL `ecommerce.improved_customer_classification_model`, (
 SELECT
   IF(totals.transactions IS NULL, 0, 1) AS label,
   IFNULL(device.operatingSystem, '') AS os,
