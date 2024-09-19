@@ -1,5 +1,5 @@
 ## Create ML Models with BigQuery ML: Challenge Lab [SOLUTION]
-This guide is for ```austin_location_model```, please read your instruction lab task 2 carefully <br/>
+This guide is for ```austin_location_model```, please read your instruction lab <strong>Task 2</strong> carefully <br/>
 If you have to make ```predicts_visitor_model``` please move to [this guide lab](https://github.com/cloudlabguru/gcp-cloudskillboost/blob/main/Create%20ML%20Models%20with%20BigQuery%20ML/%5Bpredicts_visitor_model%5D%20Create%20ML%20Models%20with%20BigQuery%20ML%3A%20Challenge%20Lab.md) <br/>
 If you have to make ```customer_classification_model``` please move to [this guide lab](https://github.com/cloudlabguru/gcp-cloudskillboost/blob/main/Create%20ML%20Models%20with%20BigQuery%20ML/%5Bcustomer_classification_model%5D%20Create%20ML%20Models%20with%20BigQuery%20ML_%20Challenge%20Lab.md)
 
