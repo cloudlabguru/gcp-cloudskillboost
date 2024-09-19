@@ -37,7 +37,9 @@ FROM `data-to-insights.ecommerce.web_analytics`
 GROUP BY fullvisitorid)
 USING (fullVisitorId)
 ;
-
+```
+and run this query
+```sql
 SELECT
   roc_auc,
   CASE
@@ -135,7 +137,9 @@ SELECT * EXCEPT(unique_session_id) FROM (
   device.deviceCategory,
   country
 );
-
+```
+and run this query
+```sql
 #standardSQL
 SELECT
   roc_auc,
@@ -214,7 +218,7 @@ Run this script in BigQuery Editor
 SELECT
 *
 FROM
-  ml.PREDICT(MODEL `ecommerce.improved_customer_classification_model`,
+  ml.PREDICT(MODEL `ecommerce.finalized_classification_model`,
    (
 
 WITH all_visitor_stats AS (
