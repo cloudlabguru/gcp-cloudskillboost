@@ -1,8 +1,8 @@
 ## Explore Generative AI with the Vertex AI Gemini API: Challenge Lab [SOLUTION]
 
 ### Task 1. Generate text using Gemini
-Copy to [notepad](https://www.rapidtables.com/tools/notepad.html) and fill the ```LOCATION``` with given value <br/>
-Then run in Cloud Shell
+* Copy to [notepad](https://www.rapidtables.com/tools/notepad.html) and fill the ```LOCATION``` with given value <br/>
+* Then run in Cloud Shell
 ```
 pip3 install --upgrade --user google-cloud-aiplatform
 
@@ -28,13 +28,12 @@ curl -X POST \
 ```
 
 ### Task 2-3
-Open Vertex AI Workbench > user managed notebook > open JupyterLab
-Run this in terminal
+* Open Vertex AI Workbench > user managed notebook > open JupyterLab
+* Run this in terminal
 ```
 wget https://raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/main/Explore%20Generative%20AI%20with%20the%20Vertex%20AI%20Gemini%20API/gemini-explorer-challenge.ipynb
 ```
-
-Open the notebook file and fill the LOCATION <br/>
-Run all cells
+* Open the notebook file and fill the ```LOCATION``` <br/>
+* Run all cells
 
 ## Congratulations !! 
