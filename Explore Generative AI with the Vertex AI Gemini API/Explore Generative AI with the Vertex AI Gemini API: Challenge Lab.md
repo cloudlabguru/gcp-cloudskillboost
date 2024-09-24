@@ -1,7 +1,8 @@
 ## Explore Generative AI with the Vertex AI Gemini API: Challenge Lab [SOLUTION]
 
 ### Task 1. Generate text using Gemini
-Open Cloud Shell and run this script
+Copy to [notepad](https://www.rapidtables.com/tools/notepad.html) and fill the LOCATION <br/>
+Then run in Cloud Shell
 ```
 pip3 install --upgrade --user google-cloud-aiplatform
 
