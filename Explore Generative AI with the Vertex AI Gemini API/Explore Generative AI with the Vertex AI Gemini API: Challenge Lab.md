@@ -34,7 +34,7 @@ Run this in terminal
 wget https://raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/main/Explore%20Generative%20AI%20with%20the%20Vertex%20AI%20Gemini%20API/gemini-explorer-challenge.ipynb
 ```
 
-Open the notebook file and fill the LOCATION
+Open the notebook file and fill the LOCATION <br/>
 Run all cells
 
 ## Congratulations !! 
