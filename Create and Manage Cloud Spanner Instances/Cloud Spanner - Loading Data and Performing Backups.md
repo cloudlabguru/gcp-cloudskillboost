@@ -25,7 +25,7 @@ EOF
 
 python3 insert.py
 
-sleep 100
+sleep 50
 
 cat >  batch_insert.py <<EOF
 from google.cloud import spanner
@@ -51,7 +51,7 @@ EOF
 
 python3 batch_insert.py
 
-sleep 100
+sleep 50
 
 gsutil mb gs://qwiklabs-gcp-03-279c1cdd7fc7
 touch emptyfile
@@ -60,7 +60,7 @@ gsutil cp emptyfile gs://qwiklabs-gcp-03-279c1cdd7fc7/tmp/emptyfile
 gcloud services disable dataflow.googleapis.com --force
 gcloud services enable dataflow.googleapis.com
 
-sleep 100
+sleep 200
 
 gcloud dataflow jobs run spanner-load --gcs-location gs://dataflow-templates-REGION/latest/GCS_Text_to_Cloud_Spanner --region REGION --staging-location gs://$DEVSHELL_PROJECT_ID/tmp/ --parameters instanceId=banking-instance,databaseId=banking-db,importManifest=gs://cloud-training/OCBL372/manifest.json
 ```
