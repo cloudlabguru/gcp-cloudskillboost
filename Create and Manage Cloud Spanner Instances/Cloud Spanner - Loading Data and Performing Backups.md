@@ -1,7 +1,7 @@
 ## Cloud Spanner - Loading Data and Performing Backups [SOLUTION]
 
-* Replace variable ```REGION``` with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
-* Run this following command in Cloud Shell and wait until the dataflow job succeed to get the last green tick
+### Task 1-3
+Run this following command in Cloud Shell
 ```
 gcloud spanner databases execute-sql banking-db --instance=banking-instance \
  --sql="INSERT INTO Customer (CustomerId, Name, Location) VALUES ('bdaaaa97-1b4b-4e58-b4ad-84030de92235', 'Richard Nelson', 'Ada Ohio')"
@@ -24,9 +24,11 @@ database.run_in_transaction(insert_customer)
 EOF
 
 python3 insert.py
+```
 
-sleep 100
-
+### Task 4
+Run this following command in Cloud Shell
+```
 cat >  batch_insert.py <<EOF
 from google.cloud import spanner
 from google.cloud.spanner_v1 import param_types
@@ -50,9 +52,12 @@ print("Rows inserted")
 EOF
 
 python3 batch_insert.py
+```
 
-sleep 100
-
+### Task 5
+* Replace variable ```REGION``` with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
+* Run this following command in Cloud Shell and wait until the dataflow job succeed to get the last green tick
+```
 gsutil mb gs://$(gcloud config get-value project)
 touch emptyfile
 gsutil cp emptyfile gs://$(gcloud config get-value project)/tmp/emptyfile
