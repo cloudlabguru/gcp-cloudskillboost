@@ -1,7 +1,7 @@
 ## Cloud Spanner - Loading Data and Performing Backups [SOLUTION]
 
 * Replace variable ```REGION``` with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
-* Run this following command in Cloud Shell and wait until the dataflow succeed to get the green ticks for last task
+* Run this following command in Cloud Shell and wait until the dataflow job succeed to get the green ticks for last task
 ```
 gcloud spanner databases execute-sql banking-db --instance=banking-instance \
  --sql="INSERT INTO Customer (CustomerId, Name, Location) VALUES ('bdaaaa97-1b4b-4e58-b4ad-84030de92235', 'Richard Nelson', 'Ada Ohio')"
