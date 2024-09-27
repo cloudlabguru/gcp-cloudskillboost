@@ -25,7 +25,7 @@ EOF
 
 python3 insert.py
 
-sleep 50
+sleep 100
 
 cat >  batch_insert.py <<EOF
 from google.cloud import spanner
@@ -51,7 +51,7 @@ EOF
 
 python3 batch_insert.py
 
-sleep 50
+sleep 100
 
 gsutil mb gs://$(gcloud config get-value project)
 touch emptyfile
