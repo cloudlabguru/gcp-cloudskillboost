@@ -53,14 +53,14 @@ python3 batch_insert.py
 
 sleep 50
 
-gsutil mb gs://qwiklabs-gcp-03-279c1cdd7fc7
+gsutil mb gs://$(gcloud config get-value project)
 touch emptyfile
-gsutil cp emptyfile gs://qwiklabs-gcp-03-279c1cdd7fc7/tmp/emptyfile
+gsutil cp emptyfile gs://$(gcloud config get-value project)/tmp/emptyfile
 
 gcloud services disable dataflow.googleapis.com --force
 gcloud services enable dataflow.googleapis.com
 
-sleep 200
+sleep 100
 
 gcloud dataflow jobs run spanner-load --gcs-location gs://dataflow-templates-REGION/latest/GCS_Text_to_Cloud_Spanner --region REGION --staging-location gs://$DEVSHELL_PROJECT_ID/tmp/ --parameters instanceId=banking-instance,databaseId=banking-db,importManifest=gs://cloud-training/OCBL372/manifest.json
 ```
