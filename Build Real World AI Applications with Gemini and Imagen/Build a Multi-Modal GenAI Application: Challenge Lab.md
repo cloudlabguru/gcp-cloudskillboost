@@ -1,6 +1,5 @@
 ## Build a Multi-Modal GenAI Application: Challenge Lab [SOLUTION]
 
-Fill and run this following 
 ### Task 1
 Run this following command in Cloud Shell
 ```
