@@ -1,7 +1,12 @@
 ## Build a Multi-Modal GenAI Application: Challenge Lab [SOLUTION]
 
+Fill this value and run in terminal
+```
+export REGION=
+```
+
 ### Task 1
-Run this following command in Cloud Shell
+Run this following command in terminal
 ```
 ID="$(gcloud config get-value project)"
 
@@ -52,7 +57,7 @@ sleep 30
 ```
 
 ### Task 2
-Run this following command in Cloud Shell
+Run this following command in terminal
 ```
 cat > genai.py <<EOF_CP
 import vertexai
