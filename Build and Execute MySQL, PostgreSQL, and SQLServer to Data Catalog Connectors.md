@@ -1,29 +1,56 @@
-## Cloud Spanner - Loading Data and Performing Backups [SOLUTION]
+## Build and Execute MySQL, PostgreSQL, and SQLServer to Data Catalog Connectors [SOLUTION]
 
 ### Task 1-3
-Run this following command in Cloud Shell
+* Replace variable ```ZONE``` with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
+* Run this following command in Cloud Shell
 ```
-gcloud spanner databases execute-sql banking-db --instance=banking-instance \
- --sql="INSERT INTO Customer (CustomerId, Name, Location) VALUES ('bdaaaa97-1b4b-4e58-b4ad-84030de92235', 'Richard Nelson', 'Ada Ohio')"
+gcloud services enable datacatalog.googleapis.com
 
-cat >  insert.py <<EOF
-from google.cloud import spanner
-from google.cloud.spanner_v1 import param_types
-INSTANCE_ID = "banking-instance"
-DATABASE_ID = "banking-db"
-spanner_client = spanner.Client()
-instance = spanner_client.instance(INSTANCE_ID)
-database = instance.database(DATABASE_ID)
-def insert_customer(transaction):
-    row_ct = transaction.execute_update(
-        "INSERT INTO Customer (CustomerId, Name, Location)"
-        "VALUES ('b2b4002d-7813-4551-b83b-366ef95f9273', 'Shana Underwood', 'Ely Iowa')"
-    )
-    print("{} record(s) inserted.".format(row_ct))
-database.run_in_transaction(insert_customer)
-EOF
+export REGION="${ZONE%-*}"
+export PROJECT_ID=$(gcloud config get-value project)
 
-python3 insert.py
+gsutil cp gs://spls/gsp814/cloudsql-sqlserver-tooling.zip .
+unzip cloudsql-sqlserver-tooling.zip
+
+cd cloudsql-sqlserver-tooling/infrastructure/terraform
+
+sed -i "s/us-central1/$REGION/g" variables.tf
+
+sed -i "s/$REGION-a/$ZONE/g" variables.tf
+
+cd ~/cloudsql-sqlserver-tooling
+bash init-db.sh
+
+gcloud iam service-accounts create sqlserver2dc-credentials \
+--display-name  "Service Account for SQL Server to Data Catalog connector" \
+--project $PROJECT_ID
+
+gcloud iam service-accounts keys create "sqlserver2dc-credentials.json" \
+--iam-account "sqlserver2dc-credentials@$PROJECT_ID.iam.gserviceaccount.com"
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+--member "serviceAccount:sqlserver2dc-credentials@$PROJECT_ID.iam.gserviceaccount.com" \
+--quiet \
+--project $PROJECT_ID \
+--role "roles/datacatalog.admin"
+
+cd infrastructure/terraform/
+
+public_ip_address=$(terraform output -raw public_ip_address)
+username=$(terraform output -raw username)
+password=$(terraform output -raw password)
+database=$(terraform output -raw db_name)
+
+cd ~/cloudsql-sqlserver-tooling
+
+docker run --rm --tty -v \
+"$PWD":/data mesmacosta/sqlserver2datacatalog:stable \
+--datacatalog-project-id=$PROJECT_ID \
+--datacatalog-location-id=$REGION \
+--sqlserver-host=$public_ip_address \
+--sqlserver-user=$username \
+--sqlserver-pass=$password \
+--sqlserver-database=$database
 ```
 
 ### Task 4
