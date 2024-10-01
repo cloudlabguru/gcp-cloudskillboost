@@ -1,5 +1,6 @@
 ## Develop GenAI Apps with Gemini and Streamlit: Challenge Lab [SOLUTION]
 
+### Task 1. Use cURL to test a prompt with the API
 Run this following command in Vertex AI terminal
 ```
 gsutil cp gs://spls/gsp517/prompt.ipynb .
@@ -9,48 +10,60 @@ curl -LO
 
 Then run the prompt.ipynb
 
-### Task 4
+### Task 2-4
+Fill and run this in Cloud Shell
+```
+export REGION=
+```
+
 Run this following command in Cloud Shell
 ```
-cat >  batch_insert.py <<EOF
-from google.cloud import spanner
-from google.cloud.spanner_v1 import param_types
-INSTANCE_ID = "banking-instance"
-DATABASE_ID = "banking-db"
-spanner_client = spanner.Client()
-instance = spanner_client.instance(INSTANCE_ID)
-database = instance.database(DATABASE_ID)
-with database.batch() as batch:
-    batch.insert(
-        table="Customer",
-        columns=("CustomerId", "Name", "Location"),
-        values=[
-        ('edfc683f-bd87-4bab-9423-01d1b2307c0d', 'John Elkins', 'Roy Utah'),
-        ('1f3842ca-4529-40ff-acdd-88e8a87eb404', 'Martin Madrid', 'Ames Iowa'),
-        ('3320d98e-6437-4515-9e83-137f105f7fbc', 'Theresa Henderson', 'Anna Texas'),
-        ('6b2b2774-add9-4881-8702-d179af0518d8', 'Norma Carter', 'Bend Oregon'),
-        ],
-    )
-print("Rows inserted")
-EOF
+gcloud services enable run.googleapis.com
 
-python3 batch_insert.py
+git clone https://github.com/GoogleCloudPlatform/generative-ai.git
+
+cd generative-ai/gemini/sample-apps/gemini-streamlit-cloudrun
+
+gsutil cp gs://spls/gsp517/chef.py .
+
+rm -rf Dockerfile chef.py
+
+curl -LO
+
+curl -LO
+
+mv Dockerfile.txt Dockerfile
+
+export PROJECT = $(gcloud config get-value project)
+gcloud storage cp chef.py gs://$PROJECT-generative-ai/
+
+python3 -m venv gemini-streamlit
+source gemini-streamlit/bin/activate
+python3 -m  pip install -r requirements.txt
+
+streamlit run chef.py \
+  --browser.serverAddress=localhost \
+  --server.enableCORS=false \
+  --server.enableXsrfProtection=false \
+  --server.port 8080
 ```
 
-### Task 5
-* Replace variable ```REGION``` with the given value, you can use this [website](https://www.browserling.com/tools/text-replace) <br />
-* Run this following command in Cloud Shell and wait until the dataflow job succeed to get the last green tick
+### Task 5. Deploy the application to Cloud Run and test
 ```
-gsutil mb gs://$(gcloud config get-value project)
-touch emptyfile
-gsutil cp emptyfile gs://$(gcloud config get-value project)/tmp/emptyfile
+AR_REPO='chef-repo'
+SERVICE_NAME='chef-streamlit-app' 
+gcloud artifacts repositories create "$AR_REPO" --location="$REGION" --repository-format=Docker
+gcloud builds submit --tag "$REGION-docker.pkg.dev/$PROJECT/$AR_REPO/$SERVICE_NAME"
 
-gcloud services disable dataflow.googleapis.com --force
-gcloud services enable dataflow.googleapis.com
 
-sleep 100
-
-gcloud dataflow jobs run spanner-load --gcs-location gs://dataflow-templates-REGION/latest/GCS_Text_to_Cloud_Spanner --region REGION --staging-location gs://$(gcloud config get-value project)/tmp/ --parameters instanceId=banking-instance,databaseId=banking-db,importManifest=gs://cloud-training/OCBL372/manifest.json
+gcloud run deploy "$SERVICE_NAME" \
+  --port=8080 \
+  --image="$REGION-docker.pkg.dev/$PROJECT/$AR_REPO/$SERVICE_NAME" \
+  --allow-unauthenticated \
+  --region=$REGION \
+  --platform=managed  \
+  --project=$PROJECT \
+  --set-env-vars=GCP_PROJECT=$PROJECT,GCP_REGION=$REGION
 ```
 
 ## Congratulations !! 
