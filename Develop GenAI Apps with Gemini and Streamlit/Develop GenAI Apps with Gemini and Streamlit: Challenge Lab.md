@@ -5,7 +5,7 @@ Run this following command in Vertex AI terminal
 ```
 gsutil cp gs://spls/gsp517/prompt.ipynb .
 
-curl -LO 
+curl -LO raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/main/Develop%20GenAI%20Apps%20with%20Gemini%20and%20Streamlit/prompt.ipynb
 ```
 
 Then run the prompt.ipynb
@@ -28,14 +28,14 @@ gsutil cp gs://spls/gsp517/chef.py .
 
 rm -rf Dockerfile chef.py
 
-curl -LO
+curl -LO raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/main/Develop%20GenAI%20Apps%20with%20Gemini%20and%20Streamlit/chef.py
 
-curl -LO
+curl -LO raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/main/Develop%20GenAI%20Apps%20with%20Gemini%20and%20Streamlit/Dockerfile.txt
 
 mv Dockerfile.txt Dockerfile
 
-export PROJECT_ID = $(gcloud config get-value project)
-gcloud storage cp chef.py gs://$PROJECT_ID-generative-ai/
+export PROJECT = $(gcloud config get-value project)
+gcloud storage cp chef.py gs://$PROJECT-generative-ai/
 
 python3 -m venv gemini-streamlit
 source gemini-streamlit/bin/activate
@@ -53,7 +53,7 @@ streamlit run chef.py \
 AR_REPO='chef-repo'
 SERVICE_NAME='chef-streamlit-app' 
 gcloud artifacts repositories create "$AR_REPO" --location="$REGION" --repository-format=Docker
-gcloud builds submit --tag "$REGION-docker.pkg.dev/$PROJECT_ID/$AR_REPO/$SERVICE_NAME"
+gcloud builds submit --tag "$REGION-docker.pkg.dev/$PROJECT/$AR_REPO/$SERVICE_NAME"
 
 gcloud run deploy "$SERVICE_NAME" \
   --port=8080 \
