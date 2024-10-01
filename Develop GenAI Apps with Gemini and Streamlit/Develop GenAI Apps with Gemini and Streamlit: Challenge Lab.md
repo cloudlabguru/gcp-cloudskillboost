@@ -10,7 +10,7 @@ curl -LO raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/m
 
 Then run the prompt.ipynb
 
-### Task 2-4
+### Task 2-3
 Fill and run this in Cloud Shell
 ```
 export REGION=
@@ -48,7 +48,7 @@ streamlit run chef.py \
   --server.port 8080
 ```
 
-### Task 5. Deploy the application to Cloud Run and test
+### Task 4-5
 ```
 AR_REPO='chef-repo'
 SERVICE_NAME='chef-streamlit-app' 
