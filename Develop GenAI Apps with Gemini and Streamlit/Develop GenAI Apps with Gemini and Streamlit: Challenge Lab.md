@@ -34,7 +34,7 @@ curl -LO raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/m
 
 mv Dockerfile.txt Dockerfile
 
-export PROJECT = $(gcloud config get-value project)
+export PROJECT=$(gcloud config get-value project)
 gcloud storage cp chef.py gs://$PROJECT-generative-ai/
 
 python3 -m venv gemini-streamlit
