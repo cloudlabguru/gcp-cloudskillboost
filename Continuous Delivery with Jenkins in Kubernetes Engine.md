@@ -7,7 +7,7 @@ export ZONE=
 
 Then run this command in Cloud Shell
 ```
-gcloud config set compute/zone
+gcloud config set compute/zone $ZONE
 
 gsutil cp gs://spls/gsp051/continuous-deployment-on-kubernetes.zip .
 
@@ -15,7 +15,7 @@ unzip continuous-deployment-on-kubernetes.zip
 
 cd continuous-deployment-on-kubernetes
 
-gcloud container clusters create jenkins-cd \
+gcloud container clusters create jenkins-cd --zone=$ZONE \
 --num-nodes 2 \
 --machine-type e2-standard-2 \
 --scopes "https://www.googleapis.com/auth/source.read_write,cloud-platform"
