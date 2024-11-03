@@ -25,7 +25,9 @@ gsutil cp gs://spls/gsp290/data_files/head_usa_names.csv gs://$PROJECT/data_file
 bq mk lake
 
 docker run -it -e PROJECT=$PROJECT -v $(pwd)/dataflow-python-examples:/dataflow python:3.7 /bin/bash
-
+```
+and this
+```
 pip install apache-beam[gcp]==2.24.0
 
 cd dataflow/
