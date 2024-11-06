@@ -48,7 +48,7 @@ CREATE PUBLICATION test_publication FOR ALL TABLES;
 ALTER USER POSTGRES WITH REPLICATION;
 SELECT PG_CREATE_LOGICAL_REPLICATION_SLOT('test_replication', 'pgoutput');
 
-exit
+\q
 ```
 
 Fill this value and run in Cloud Shell
