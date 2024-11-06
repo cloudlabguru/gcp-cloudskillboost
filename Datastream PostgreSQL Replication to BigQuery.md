@@ -75,36 +75,8 @@ gcloud datastream connection-profiles create bigquery-cp \
   --location=$REGION \
   --display-name="bigquery-cp" \
   --type=bigquery
-
-cat << EOF > source_config.json
-  {
-    "includeObjects": {"postgresqlSchemas": [
-        {
-          "schema": "test",
-        }]},
-    "excludeObjects": {},
-    "replicationSlot": "test_replication",
-    "publication": "test_publication"
-  }
-EOF
-
-cat << EOF > destination_config.json
-{
-  "singleTargetDataset": {
-    "datasetId": "$(gcloud config get-value project):test"
-  },
-  "dataFreshness": "0s"
-}
-EOF
-
-gcloud datastream streams create test-stream \
-  --location=$REGION \
-  --display-name="test-stream" \
-  --source=postgres-cp \
-  --postgresql-source-config=source_config.json \
-  --destination=bigquery-cp \
-  --bigquery-destination-config=destination_config.json \
-  --backfill-none
 ```
+
+Continue following the instruction in video
 
 ## Congratulations !! 
