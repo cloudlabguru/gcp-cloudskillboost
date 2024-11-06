@@ -17,7 +17,7 @@ If ```form-1```, copy this following command and run in Cloud Shell
 ```
 export BUCKET="$(gcloud config get-value project)"		
 
-gsutil mb -p $BUCKET gs://$BUCKET_1
+gsutil mb -c coldline gs://$BUCKET_1
 
 gsutil retention set 30s gs://$BUCKET_2
 
