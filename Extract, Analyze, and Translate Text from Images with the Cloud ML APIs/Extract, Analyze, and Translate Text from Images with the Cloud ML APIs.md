@@ -16,7 +16,7 @@ gcloud storage buckets create gs://$DEVSHELL_PROJECT_ID-bucket --project=$DEVSHE
 
 gsutil iam ch projectEditor:serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com:objectCreator gs://$DEVSHELL_PROJECT_ID-bucket
 
-curl -LO github.com/cloudlabguru/gcp-cloudskillboost/blob/main/Extract%2C%20Analyze%2C%20and%20Translate%20Text%20from%20Images%20with%20the%20Cloud%20ML%20APIs/sign.jpg)
+curl -LO github.com/cloudlabguru/gcp-cloudskillboost/blob/main/Extract%2C%20Analyze%2C%20and%20Translate%20Text%20from%20Images%20with%20the%20Cloud%20ML%20APIs/sign.jpg
 
 gsutil cp sign.jpg gs://$DEVSHELL_PROJECT_ID-bucket/sign.jpg
 
