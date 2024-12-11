@@ -1,10 +1,11 @@
 ## Create and Deploy a RAG application with vector search in Firestore
 
 1. Create a RAG application
-- Copy this following command and run in Vertex AI Workbench > Terminal
+- Open Vertex AI > Colab Enterprise
+- Choose ```Import notebooks from URLs```
+- Enter this URL
 ```
-curl -LO raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/main/Create%20and%20Deploy%20a%20RAG%20application%20with%20vector%20search%20in%20Firestore/cymbal_ingest_to_vector_database.ipynb
-sudo chmod +x cymbal_ingest_to_vector_database.ipynb
+raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/main/Create%20and%20Deploy%20a%20RAG%20application%20with%20vector%20search%20in%20Firestore/cymbal_ingest_to_vector_database.ipynb
 ```
 - Open the ```cymbal_ingest_to_vector_database.ipynb``` and fill some variables needed
 - Run all cells
