@@ -4,6 +4,7 @@
 - Copy this following command and run in Vertex AI Workbench > Terminal
 ```
 curl -LO raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/main/Create%20and%20Deploy%20a%20RAG%20application%20with%20vector%20search%20in%20Firestore/cymbal_ingest_to_vector_database.ipynb
+sudo chmod +x cymbal_ingest_to_vector_database.ipynb
 ```
 - Open the ```cymbal_ingest_to_vector_database.ipynb``` and fill some variables needed
 - Run all cells
@@ -16,6 +17,7 @@ cd gen-ai-assessment
 python3 -m pip install -r requirements.txt
 
 curl -LO raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/main/Create%20and%20Deploy%20a%20RAG%20application%20with%20vector%20search%20in%20Firestore/main.py
+sudo chmod +x main.py
 
 python3 main.py
 
