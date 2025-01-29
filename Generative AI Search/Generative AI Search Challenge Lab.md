@@ -1,15 +1,14 @@
 ## Generative AI Search Challenge Lab
 
-### Task 1-3. Create a website search app
+### Task 1-4. Create a website search app
 - Open ```Agent Builder```
-- Create an app like shown in video tutorial with the given values from the lab instruction 
-
+- Create some apps like shown in video tutorial with the given values from the lab instruction 
+  
 ### Task 5. Generate embedding and calculate similarity
 - Copy this following command and run in Vertex AI Workbench > Terminal
 ```
 curl -LO raw.githubusercontent.com/cloudlabguru/gcp-cloudskillboost/refs/heads/main/Generative%20AI%20Search/genai_search_challenge_notebook.ipynb
 ```
 - Open and run all cells
-```
 
 ## Congratulations !! 
