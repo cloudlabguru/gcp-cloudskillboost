@@ -2,7 +2,7 @@
 
 ### Task 1-4. Create a website search app
 - Open ```Agent Builder```
-- Create some apps like shown in video tutorial with the given values from the lab instruction 
+- Create some apps like shown in video tutorial with the given values from the lab instruction https://youtu.be/mPs8mN3CrMI
   
 ### Task 5. Generate embedding and calculate similarity
 - Copy this following command and run in Vertex AI Workbench > Terminal
